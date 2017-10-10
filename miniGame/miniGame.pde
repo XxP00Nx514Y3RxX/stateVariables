@@ -2,22 +2,15 @@
 int stateofgame;
 float rectx, recty, playerx, playery;
 String menu;
-//float speed = 0;
-//float gravity = 0.75;
-//int seconds = millis();
-
+String lose;
+String start;
 float variablea = 0.0;//random(0.0, PI*2);
 float speed;
-
 float radius = 0;
 float rmove = +1;
 float minRadius = 1, maxRadius = 10;
 PImage ted;
-
 float tedX, tedY;
-
-
-
 
 void setup() {
   stateofgame = 0;
@@ -25,8 +18,10 @@ void setup() {
   recty = 450;
   ted = loadImage("cruz.png");
   menu = "Cruz to the end?";
+  lose = "ya got cooties from not cruzin";
   playerx = 100;
   playery = 100;
+  start = "click to cruz ;)";
   tedX = random(0, width);
   tedY = random(0, height);
   size(650, 650);
@@ -34,7 +29,7 @@ void setup() {
 }
 
 void draw() {
-  println(stateofgame);
+  //println(stateofgame);
   visualizer();
 }
 
@@ -48,6 +43,9 @@ void visualizer() {
   else if (stateofgame == 2){
     secretlevel();
   }
+  else if (stateofgame == 3){
+    end();
+  }
 }
 
 void runmenu() {
@@ -60,6 +58,10 @@ void runmenu() {
     ellipse(random(width), random(height), random(50, 100), random(50, 100));
     ellipse(random(width), random(height), random(50, 100), random(50, 100));
     rect(rectx, recty, 450, 100);
+    fill(0);
+    textSize(60);
+    text(start, rectx + 25, recty + 70);
+    fill(255);
     textSize(42);
     text(menu, 150, 350);
     buttonpressing();
@@ -99,13 +101,12 @@ void dothingr() {
   noStroke();
   //rect (0, 0, width, height); 
   //background(0, 50);
-
   int radiusofsolarsystem = 200 + 100;
   float asteroidx = width/2 + cos (variablea) * radiusofsolarsystem;
   float asteroidy = height/2 + sin (variablea) * radiusofsolarsystem;
   variablea = variablea + speed;
   fill(255, 0, 0);
-
+  
   ellipse(asteroidx, asteroidy, 10, 10);
   radius += rmove; 
   if (radius > maxRadius)
@@ -117,7 +118,6 @@ void dothingr() {
 void dothingo() {
   speed = 0.0175;
   noStroke();
-
   int radiusofsolarsystem = 175 + 100;
   float asteroidx = width/2 + cos (variablea) * radiusofsolarsystem;
   float asteroidy = height/2 + sin (variablea) * radiusofsolarsystem;
@@ -135,7 +135,6 @@ void dothingo() {
 void dothingy() {
   speed = 0.015;
   noStroke();
-
   int radiusofsolarsystem = 150 + 100;
   float asteroidx = width/2 + cos (variablea) * radiusofsolarsystem;
   float asteroidy = height/2 + sin (variablea) * radiusofsolarsystem;
@@ -153,7 +152,6 @@ void dothingy() {
 void dothingg() {
   speed = 0.0125;
   noStroke();
-
   int radiusofsolarsystem = 125 + 100;
   float asteroidx = width/2 + cos (variablea) * radiusofsolarsystem;
   float asteroidy = height/2 + sin (variablea) * radiusofsolarsystem;
@@ -171,7 +169,6 @@ void dothingg() {
 void dothingb() {
   speed = 0.01;
   noStroke();
-
   int radiusofsolarsystem = 100 + 100;
   float asteroidx = width/2 + cos (variablea) * radiusofsolarsystem;
   float asteroidy = height/2 + sin (variablea) * radiusofsolarsystem;
@@ -189,7 +186,6 @@ void dothingb() {
 void dothingi() {
   speed = 0.0075;
   noStroke();
-
   int radiusofsolarsystem = 75 + 100;
   float asteroidx = width/2 + cos (variablea) * radiusofsolarsystem;
   float asteroidy = height/2 + sin (variablea) * radiusofsolarsystem;
@@ -207,7 +203,6 @@ void dothingi() {
 void dothingv() {
   speed = 0.005;
   noStroke();
-
   int radiusofsolarsystem = 50 + 100;
   float asteroidx = width/2 + cos (variablea) * radiusofsolarsystem;
   float asteroidy = height/2 + sin (variablea) * radiusofsolarsystem;
@@ -225,7 +220,11 @@ void dothingv() {
 void secretlevel(){
   background(0);
   image(ted, tedX, tedY, 50, 50);
-  //if (mouseX < tedX
+  println("TED HAS COOTIES AND HE WANTS TO HUG YOU, RUN!");
+  if ((mouseX < tedX + 25) && (mouseX > tedX - 25) && (mouseY < tedY + 25) && (mouseY > tedY - 25)){
+    //println("doodoo");
+    stateofgame = 3;
+  }
   if ((mouseX > tedX) && (mouseY > tedY)){
     tedX = tedX + 1;
     tedY = tedY + 1;
@@ -254,4 +253,9 @@ void secretlevel(){
   else if (mouseY < tedY){
     tedY = tedY - 1;
   }
+}
+
+void end(){
+  background(0);
+  text(lose, 20, height/2);
 }
